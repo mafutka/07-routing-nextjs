@@ -1,5 +1,6 @@
 import css from "./Header.module.css";
 import Link from 'next/link';
+import TagsMenu from "../TagsMenu/TagsMenu.client";
 
 const Header = () => {
     return <header className={css.header}>
@@ -11,9 +12,7 @@ const Header = () => {
           <li>
             <Link href="/">Home</Link>
           </li>
-          <li>
-            <Link href="/notes">Notes</Link>
-          </li>
+          < TagsMenu />
         </ul>
       </nav>
 

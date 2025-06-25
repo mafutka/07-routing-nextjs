@@ -5,7 +5,8 @@ import type { Note } from "../types/note"
 export type  FetchNotesResponse    = {
   notes: Note[];
   total: number;
-  totalPages: number
+  totalPages: number;
+  tag: string
 };
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
@@ -14,12 +15,17 @@ const myToken = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 export const fetchNotes = async (
   page = 1,
   perPage = 12,
-  search = ""
+  search = "",
+  tag = "",
 ): Promise<FetchNotesResponse> => {
   const params: Record<string, string | number> = { page, perPage };
 
   if (search.trim() !== "") {
     params.search = search.trim();
+  }
+
+  if (tag.trim() !== "") {
+    params.tag = tag.trim();
   }
 
   const res = await axios.get<FetchNotesResponse>("/notes", {
