@@ -24,9 +24,9 @@ export const fetchNotes = async (
     params.search = search.trim();
   }
 
-  if (tag.trim() !== "") {
-    params.tag = tag.trim();
-  }
+  if (tag.trim().toLowerCase() !== "all" && tag.trim() !== "") {
+  params.tag = tag.trim();
+}
 
   const res = await axios.get<FetchNotesResponse>("/notes", {
     headers: {

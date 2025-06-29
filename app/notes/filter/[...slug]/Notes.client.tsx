@@ -11,7 +11,7 @@ import { NoteModal } from '../../../../components/NoteModal/NoteModal';
 import type { FetchNotesResponse } from '../../../../lib/api';
 import css from './page.module.css';
 
-export default function NotesClient({ initialData }: { initialData: FetchNotesResponse }) {
+export default function NotesClient({ initialData, tag }: { initialData: FetchNotesResponse, tag: string }) {
   const [page, setPage] = useState(1); 
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
@@ -23,8 +23,8 @@ export default function NotesClient({ initialData }: { initialData: FetchNotesRe
   };
 
   const { data, isLoading, isError } = useQuery<FetchNotesResponse>({
-    queryKey: ['notes', page, debouncedSearchTerm], 
-    queryFn: () => fetchNotes(page, 12, debouncedSearchTerm),
+    queryKey: ['notes', page, debouncedSearchTerm, tag], 
+    queryFn: () => fetchNotes(page, 12, debouncedSearchTerm, tag.toLowerCase() === 'all' ? undefined : tag),
     placeholderData: keepPreviousData,
     initialData: page === 1 && debouncedSearchTerm === '' ? initialData : undefined,
   });

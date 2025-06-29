@@ -12,9 +12,10 @@ type Params = {
 export default async function NotesPage({ params }: { params: Params }) {
   const queryClient = new QueryClient();
 
-   const tag = params.slug?.[0] || '';  
+  const rawTag = params.slug?.[0] || '';
+  const tag = rawTag.toLowerCase() === 'all' ? '' : rawTag;
 
-   const data: FetchNotesResponse = await fetchNotes(1, 12, '', tag);
+  const data: FetchNotesResponse = await fetchNotes(1, 12, '', tag);
 
   await queryClient.prefetchQuery({
     queryKey: ['notes', 1, '', tag], 
@@ -23,7 +24,7 @@ export default async function NotesPage({ params }: { params: Params }) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient initialData={data} />
+      <NotesClient initialData={data} tag={tag} />
     </HydrationBoundary>
   );
 };
