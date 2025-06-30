@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().min(3).max(50).required('Title is required'),
   content: Yup.string().max(500, 'Maximum length is 500'),
   tag: Yup.string()
-    .oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'], 'Invalid tag')
+    .oneOf(['Todo', 'Work', 'Personal', 'Shopping'], 'Invalid tag')
     .required('Tag is required'),
 });
 
@@ -25,7 +25,7 @@ export const NoteForm: React.FC<NoteFormProps> = ({ onClose }) => {
     mutationFn: createNote,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
-      onClose(); // Закриваємо після інвалідейту
+      onClose(); 
     },
     onError: (error) => {
       console.error('Note creation failed:', error);
@@ -61,7 +61,6 @@ export const NoteForm: React.FC<NoteFormProps> = ({ onClose }) => {
               <option value="Todo">Todo</option>
               <option value="Work">Work</option>
               <option value="Personal">Personal</option>
-              <option value="Meeting">Meeting</option>
               <option value="Shopping">Shopping</option>
             </Field>
             <ErrorMessage name="tag" component="span" className={css.error} />

@@ -7,7 +7,8 @@ import { fetchNotes } from '../../../../lib/api';
 import SearchBox from '../../../../components/SearchBox/SearchBox';
 import NoteList from '../../../../components/NoteList/NoteList';
 import Pagination from '../../../../components/Pagination/Pagination';
-import { NoteModal } from '../../../../components/NoteModal/NoteModal';
+import  Modal from '../../../../components/Modal/Modal';
+import { NoteForm } from '../../../../components/NoteForm/NoteForm'
 import type { FetchNotesResponse } from '../../../../lib/api';
 import css from './page.module.css';
 
@@ -39,7 +40,9 @@ export default function NotesClient({ initialData, tag }: { initialData: FetchNo
       </header>
 
       {isModalOpen && (
-      <NoteModal onClose={() => setIsModalOpen(false)} />
+      <Modal onClose={() => setIsModalOpen(false)}>
+        <NoteForm onClose={() => setIsModalOpen(false)}/>
+      </Modal>
       )}
 
       {isLoading && <p>Loading...</p>}
