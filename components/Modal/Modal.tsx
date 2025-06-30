@@ -1,7 +1,7 @@
 'use client'
 import css from './Modal.module.css'
 import { useRouter } from "next/navigation";
-import { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect, useCallback } from "react"
 
 type ModalProps = {
   children: ReactNode;
@@ -11,13 +11,13 @@ type ModalProps = {
 const Modal = ({ children, onClose }: ModalProps) => {
    const router = useRouter();
 
-   const handleClose = () => {
+ const handleClose = useCallback(() => {
     if (onClose) {
       onClose();
     } else {
       router.back();
     }
-    }
+  }, [onClose, router]);
 
    useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
@@ -27,7 +27,7 @@ const Modal = ({ children, onClose }: ModalProps) => {
     };
     window.addEventListener('keydown', onEsc);
     return () => removeEventListener('keydown', onEsc);
-   }, [onClose]);
+   }, [handleClose]);
 
    return (
     <div className={css.overlay} onClick={handleClose}>

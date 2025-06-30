@@ -4,12 +4,13 @@ import type { FetchNotesResponse } from '../../../../lib/api';
 import NotesClient from './Notes.client';
 
 
-
-type Params = {
-  slug?: string[]
+type NotePageProps = {
+  params: {
+    slug?: string[];
+  };
 };
 
-export default async function NotesPage({ params }: { params: Params }) {
+export default async function NotesPage({ params }: NotePageProps) {
   const queryClient = new QueryClient();
 
   const rawTag = params.slug?.[0] || '';
@@ -18,7 +19,7 @@ export default async function NotesPage({ params }: { params: Params }) {
   const data: FetchNotesResponse = await fetchNotes(1, 12, '', tag);
 
   await queryClient.prefetchQuery({
-    queryKey: ['notes', 1, '', tag], 
+    queryKey: ['notes', 1, '', tag],
     queryFn: () => Promise.resolve(data),
   });
 
@@ -27,4 +28,4 @@ export default async function NotesPage({ params }: { params: Params }) {
       <NotesClient initialData={data} tag={tag} />
     </HydrationBoundary>
   );
-};
+}
