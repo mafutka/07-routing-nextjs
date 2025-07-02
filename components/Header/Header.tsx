@@ -1,6 +1,6 @@
 import css from "./Header.module.css";
 import Link from 'next/link';
-import TagsMenu from "../TagsMenu/TagsMenu.client";
+import TagsMenu from "../TagsMenu/TagsMenu";
 
 const Header = () => {
     return <header className={css.header}>
