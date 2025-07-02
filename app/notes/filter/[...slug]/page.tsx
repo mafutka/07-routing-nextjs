@@ -2,12 +2,12 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { fetchNotes } from '../../../../lib/api';
 import NotesClient from './Notes.client';
 
-export default async function NotesPage({
-  params,
-}: {
-  params: { slug?: string[] };
-}) {
-  const { slug } =  params; 
+type Props = {
+  params: Promise<{ slug: string[] }>;
+};
+
+export default async function NotesPage({ params }: Props) {
+  const { slug } = await params; 
 
   const queryClient = new QueryClient();
 
